@@ -17,7 +17,13 @@ public class _39组合总和 {
                 res.add(new ArrayList<>(stack));
             return;
         }
+        // 组合就不能再往当前的前面取，比如1,2和2,1是重复的
+        // 按顺序选取无需判断是否已经取过
         for (int i = start; i < nums.length; i++) {
+            // 因为nums是经过排序的，为了避免将负数传递到下一个分支，这里进行剪枝，减掉后面无用的分支搜索
+            // 剪枝的关键步骤
+            if(target - nums[i] < 0)
+                break;
             stack.push(nums[i]);
             kSumCore(nums, res, target - nums[i], i, stack);
             stack.pop();

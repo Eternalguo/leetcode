@@ -41,21 +41,26 @@ public class _18四数之和 {
         return list;
     }
     private static void kSumCore(int[] nums, List<List<Integer>> res, int target, int start, int k, Stack<Integer> stack){
-        if(k <= 0){
-            if(k == 0 && target == 0)
+        if(stack.size() == k){
+            if(target == 0)
                 res.add(new ArrayList<>(stack));
             return;
         }
         for (int i = start; i < nums.length; i++) {
+            //剪枝
+            if(nums.length-i+1+stack.size() < k)
+                break;
+            //去重
+            if(i > start && nums[i] == nums[i-1])
+                continue;
             stack.push(nums[i]);
-            while(i < nums.length && nums[i] == nums[++i]);
-            kSumCore(nums, res, target - nums[i], i, k-1, stack);
+            kSumCore(nums, res, target - nums[i], i+1, k, stack);
             stack.pop();
         }
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[]{-3,-2,-1,0,0,1,2,3};
+        int[] arr = new int[]{1,0,-1,0,-2,2};
 //        List<List<Integer>> res = fourSum(arr, -11);
         List<List<Integer>> res = kSum(arr, 0, 4);
         System.out.println(res);

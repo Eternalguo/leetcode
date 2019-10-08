@@ -48,7 +48,7 @@ public class _18四数之和 {
         }
         for (int i = start; i < nums.length; i++) {
             //剪枝
-            if(nums.length-i+1+stack.size() < k)
+            if(nums.length-i+stack.size() < k)
                 break;
             //去重
             if(i > start && nums[i] == nums[i-1])
